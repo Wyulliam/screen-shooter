@@ -72,8 +72,7 @@ namespace ScreenShooter
         /// <param name="format"></param>
         public void CaptureScreenToFile(string filename, ImageFormat format)
         {
-            Image img = CaptureScreen();
-            img.Save(filename, format);
+            CaptureScreen().Save(filename, format);
         }
 
         /// <summary>

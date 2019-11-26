@@ -20,21 +20,30 @@ namespace ScreenShooter
             _timespan = Int32.Parse(Console.ReadLine());
 
             DirectoryInfo dir = new DirectoryInfo(_path);
+            PrintScreen ps = new PrintScreen();
 
             if (!dir.Exists) dir.Create();
 
+            var countScreens = 0;
+
             while (true)
             {
-                await StartPrinting();
+                await StartPrinting(ps);
                 Thread.Sleep(_timespan);
+
+                if (countScreens == 20)
+                {
+                    System.GC.Collect();
+                    countScreens = 0;
+                }
+                countScreens++;
             }
 
         }
 
-        private async static Task StartPrinting()
+        private async static Task StartPrinting(PrintScreen ps)
         {
-            var name = DateTime.Now.ToString("MMddmmss");
-            PrintScreen ps = new PrintScreen();
+            var name = DateTime.Now.ToString("MMddhhmmss");
             ps.CaptureScreenToFile($"{_path}\\{name}.png", ImageFormat.Png);
             Console.WriteLine($"Printed {name}");
         }
