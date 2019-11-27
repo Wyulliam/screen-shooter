@@ -8,13 +8,15 @@ namespace ScreenShooter
 {
     class Program
     {
-        private static string _path = "C:\\temp";
+        private static string _path = "C:\\temp\\not posted";
         private static int _timespan = 3000;
 
         static async Task Main(string[] args)
         {
             Console.WriteLine("Path:");
-            _path = Console.ReadLine();
+            var path = Console.ReadLine();
+            if (path != string.Empty)
+                _path = path;
 
             Console.WriteLine("Timespan in MS:");
             _timespan = Int32.Parse(Console.ReadLine());
@@ -43,7 +45,7 @@ namespace ScreenShooter
 
         private async static Task StartPrinting(PrintScreen ps)
         {
-            var name = DateTime.Now.ToString("MMddhhmmss");
+            var name = DateTime.Now.ToString("yyyyMMddhhmmss");
             ps.CaptureScreenToFile($"{_path}\\{name}.png", ImageFormat.Png);
             Console.WriteLine($"Printed {name}");
         }
